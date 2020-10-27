@@ -11,6 +11,9 @@ import { NavbarComponent } from './components/Navbar/navbar.component';
 import { SidebarComponent } from './components/Sidebar/sidebar.component';
 import { FooterComponent } from './components/Footer/footer.component';
 
+import { AuthService } from './services/auth.service';
+import { DataService } from './services/data.service';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -35,7 +38,8 @@ import { FooterComponent } from './components/Footer/footer.component';
     RouterModule
   ],
   providers: [
-    
+    AuthService,
+    DataService
   ]
 })
 export class SharedModule {}
