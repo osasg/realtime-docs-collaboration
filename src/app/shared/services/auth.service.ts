@@ -27,7 +27,7 @@ export class AuthService {
     this._user.next(user);
   }
 
-  getToken(): Observable<string> {
+  getAccessToken(): Observable<string> {
     return this._userObservable.pipe(
       take(1),
       map(user => user && user.accessToken)

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { ButtonGhostComponent } from './components/ButtonGhost/button-ghost.component';
@@ -11,8 +11,13 @@ import { NavbarComponent } from './components/Navbar/navbar.component';
 import { SidebarComponent } from './components/Sidebar/sidebar.component';
 import { FooterComponent } from './components/Footer/footer.component';
 
+import { AuthGuard } from './guards/auth.guard';
+import { NoAuthGuard } from './guards/no-auth.guard';
+
 import { AuthService } from './services/auth.service';
 import { DataService } from './services/data.service';
+import { AuthInterceptor } from './interceptors/access-token.interceptor';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
 
 @NgModule({
   imports: [
@@ -39,7 +44,19 @@ import { DataService } from './services/data.service';
   ],
   providers: [
     AuthService,
-    DataService
+    DataService,
+    AuthGuard,
+    NoAuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    }
   ]
 })
 export class SharedModule {}
