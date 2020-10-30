@@ -1,0 +1,14 @@
+# Deploy to Google App Engine
+# Serving files directly from your app
+#
+# copy this file into the `dist` folder after execute `npm run build`
+
+runtime: python27
+api_version: 1
+threadsafe: true
+handlers:
+- url: /
+  static_files: angular-boilerplate/index.html
+  upload: angular-boilerplate/index.html
+- url: /
+  static_dir: angular-boilerplate
