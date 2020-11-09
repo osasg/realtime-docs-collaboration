@@ -1,0 +1,29 @@
+.navbar mat-toolbar {
+  padding: 0 60px;
+  color: #000 !important;
+  background: #FFFFFF !important;
+  box-shadow: 0px 4px 36px rgba(0, 0, 0, 0.08);
+
+  mat-toolbar-row {
+    padding: 0;
+    height: 80px;
+  }
+
+  .logo-dsc-fptu-hcmc {
+    margin-left: 24px;
+  }
+
+  .links {
+    margin-left: auto;
+  }
+
+  mat-drawer-container {
+    width: 304px;
+
+    .drawer-header {
+      width: 304px;
+      background: #FFFFFF;
+      box-shadow: 0px 4px 36px rgba(0, 0, 0, 0.08);
+    }
+  }
+}

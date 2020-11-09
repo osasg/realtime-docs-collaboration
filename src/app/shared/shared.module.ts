@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
+import { MaterialRootModule } from '../material.module';
+
 import { ButtonGhostComponent } from './components/ButtonGhost/button-ghost.component';
 import { ButtonPrimaryComponent } from './components/ButtonPrimary/button-primary.component';
 import { LayoutComponent } from './components/Layout/layout.component';
@@ -18,6 +20,7 @@ import { AuthService } from './services/auth.service';
 import { DataService } from './services/data.service';
 import { AuthInterceptor } from './interceptors/access-token.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { HeaderComponent } from './components/Header/header.component';
 
 @NgModule({
   imports: [
@@ -25,7 +28,8 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    MaterialRootModule
   ],
   declarations: [
     ButtonGhostComponent,
@@ -33,14 +37,17 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     LayoutComponent,
     NavbarComponent,
     SidebarComponent,
-    FooterComponent
+    FooterComponent,
+    HeaderComponent
   ],
   exports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    RouterModule
+    ButtonGhostComponent,
+    ButtonPrimaryComponent,
+    LayoutComponent,
+    NavbarComponent,
+    SidebarComponent,
+    FooterComponent,
+    HeaderComponent
   ],
   providers: [
     AuthService,

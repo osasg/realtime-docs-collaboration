@@ -21,9 +21,10 @@ export class NoAuthGuard implements CanActivate, CanActivateChild {
       .isAuthenticated()
       .pipe(
         map(isAuthenticated => {
+          console.log(isAuthenticated);
           if (!isAuthenticated)
             return true;
-          this._router.navigate(['/home']);
+          this._router.navigate(['/']);
         })
       )
   }

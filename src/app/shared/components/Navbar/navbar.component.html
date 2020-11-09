@@ -1,1 +1,73 @@
-<p>navbar works!</p>
+<div class="navbar">
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <button mat-icon-button aria-label="Open sidebar" (click)="drawer.toggle()">
+        <mat-icon>apps</mat-icon>
+      </button>
+      <img class="logo-dsc-fptu-hcmc" src="/assets/images/dsc-fptu-hcmc/logo.png" alt="DSC FPTU HCMC">
+      <div class="links">
+        <a mat-button [routerLink]="'/dsc-fptu-hcmc-team'">DSC FPTU HCMC TEAM</a>
+        <a mat-button [routerLink]="'/contributors'">CONTRIBUTORS</a>
+        <a mat-button [routerLink]="'https://github.com/DSC-FPTU-HCMC/angular-boilerplate'">
+          <img width="24" height="24" src="/assets/images/vendors/github-logo.svg" alt="">
+        </a>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-drawer-container autosize [hasBackdrop]="true">
+    <mat-drawer #drawer mode="over">
+      <div class="drawer-header">
+        <img src="/assets/images/dsc-fptu-hcmc/logo.svg" alt="DSC FPTU HCMC">
+      </div>
+      <div class="drawer-body">
+        <mat-nav-list>
+          <a mat-list-item [routerLink]="'/'" >
+            <mat-icon>home</mat-icon>
+            <span>Home</span>
+          </a>
+          <a mat-list-item [routerLink]="'/source-code-structure'" >
+            <mat-icon>home</mat-icon>
+            <span>Source code structure</span>
+          </a>
+          <a mat-list-item [routerLink]="'/'" >
+            <mat-icon>home</mat-icon>
+            <span>Home</span>
+          </a>
+          <a mat-list-item [routerLink]="'/'" >
+            <mat-icon>home</mat-icon>
+            <span>How it work?</span>
+          </a>
+          <a mat-list-item [routerLink]="'/'" >
+            <mat-icon>home</mat-icon>
+            <span>Registration Page</span>
+          </a>
+          <a mat-list-item [routerLink]="'/'" >
+            <mat-icon>home</mat-icon>
+            <span>Login Page</span>
+          </a>
+          <a mat-list-item [routerLink]="'/'" >
+            <mat-icon>home</mat-icon>
+            <span>Forgot Password Page</span>
+          </a>
+          <a mat-list-item [routerLink]="'/'" >
+            <mat-icon>home</mat-icon>
+            <span>New Password Page</span>
+          </a>
+          <a mat-list-item [routerLink]="'/'" >
+            <mat-icon>home</mat-icon>
+            <span>Restricted Page</span>
+          </a>
+          <a mat-list-item [routerLink]="'/'" >
+            <mat-icon>home</mat-icon>
+            <span>Admin Page</span>
+          </a>
+          <a mat-list-item [routerLink]="'/'" >
+            <mat-icon>home</mat-icon>
+            <span>Sub-Admin Page</span>
+          </a>
+        </mat-nav-list>
+      </div>
+    </mat-drawer>
+  </mat-drawer-container>
+</div>
