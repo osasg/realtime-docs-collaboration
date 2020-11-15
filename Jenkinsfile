@@ -17,6 +17,8 @@ pipeline {
           echo "PATH = ${PATH}"
           node -v
           npm -v
+          rm -rf node_modules
+          rm package-lock.json
           npm cache clean --force
           npm install
           echo "Init success.."
