@@ -50,7 +50,7 @@ pipeline {
 
 		stage('Deploy') {
 			steps {
-        withCredentials([file(credentialsId: 'dsc-fptu-hcmc-orientation', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+        withCredentials([file(credentialsId: 'google-application-credentials-secret-file', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
           sh '''
             echo "GCP credentails: $GOOGLE_APPLICATION_CREDENTIALS"
             gcloud config set project $GOOGLE_PROJECT_ID
