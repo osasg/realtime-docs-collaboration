@@ -3,7 +3,6 @@ pipeline {
 
 	environment {
     GOOGLE_PROJECT_ID = 'dsc-fptu-hcmc-orientation'
-    GOOGLE_APPLICATION_CREDENTIALS = credentials('dsc-fptu-hcmc-orientation')
   }
 
   tools {
@@ -51,17 +50,19 @@ pipeline {
 
 		stage('Deploy') {
 			steps {
-        sh '''
-          echo "GCP credentails: ${GOOGLE_APPLICATION_CREDENTIALS}"
-          gcloud config set project $GOOGLE_PROJECT_ID
-          gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
-          gcloud config list
-          
-          cp app.yaml dist/app.yaml
-          cd dist
-          gcloud app deploy --version=v01
-          echo "Deployed to Google Compute Engine"
-        '''
+        withCredentials([file(credentialsId: 'dsc-fptu-hcmc-orientation', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+          sh '''
+            echo "GCP credentails: $GOOGLE_APPLICATION_CREDENTIALS"
+            gcloud config set project $GOOGLE_PROJECT_ID
+            gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
+            gcloud config list
+            
+            cp app.yaml dist/app.yaml
+            cd dist
+            gcloud app deploy --version=v01
+            echo "Deployed to Google Compute Engine"
+          '''
+        }
       }	
       post{
         always{
