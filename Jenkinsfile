@@ -7,6 +7,7 @@ pipeline {
 
   tools {
     nodejs 'NodeJSTool'
+    'jenkins.plugins.shiningpanda.tools.PythonInstallation' 'PythonTool'
   }
 
 	stages {
@@ -61,8 +62,7 @@ pipeline {
               ./GoogleCloudSDK/google-cloud-sdk/install.sh
             fi
             export PATH=/var/jenkins_home/GoogleCloudSDK/google-cloud-sdk/bin:$PATH
-            which python3
-            export CLOUDSDK_PYTHON=$(which python3)
+            export CLOUDSDK_PYTHON="/usr/bin/python2.6"
             echo "PATH: $PATH"
             gcloud --version
             gcloud --quiet components update
