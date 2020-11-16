@@ -7,7 +7,6 @@ pipeline {
 
   tools {
     nodejs 'NodeJSTool'
-    gcloud 'GCloudSDKTool'
   }
 
 	stages {
@@ -26,6 +25,7 @@ pipeline {
           echo "PATH = ${PATH}"
           node -v
           npm -v
+          python3 -v
           npm cache clean --force
           npm install
           echo "Init success.."
@@ -52,6 +52,21 @@ pipeline {
 			steps {
         withCredentials([file(credentialsId: 'google-application-credentials-secret-file', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
           sh '''
+            export DIRECTORY="/var/jenkins_home/GoogleCloudSDK/google-cloud-sdk/bin"
+            if [ ! -d "$DIRECTORY" ]; then
+              echo "Download Google Cloud SDK tools"
+              cd /var/jenkins_home
+              wget https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.zip -O google-cloud-sdk.zip
+              unzip -o google-cloud-sdk.zip -d ./GoogleCloudSDK/
+              ./GoogleCloudSDK/google-cloud-sdk/install.sh
+            fi
+            export PATH=/var/jenkins_home/GoogleCloudSDK/google-cloud-sdk/bin:$PATH
+            which python3
+            export CLOUDSDK_PYTHON=$(which python3)
+            echo "PATH: $PATH"
+            gcloud --version
+            gcloud --quiet components update
+
             echo "GCP credentails: $GOOGLE_APPLICATION_CREDENTIALS"
             gcloud config set project $GOOGLE_PROJECT_ID
             gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
