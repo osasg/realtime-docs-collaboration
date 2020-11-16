@@ -13,12 +13,19 @@ pipeline {
 	stages {
 		stage('Init') {
 			steps {
+        script {
+          if (fileExists('node_modules')) {
+            sh 'rm -rf node_modules'
+          }
+
+          if (fileExists('rm package-lock.json')) {
+            sh 'rm package-lock.json'
+          }
+        }
         sh '''
           echo "PATH = ${PATH}"
           node -v
           npm -v
-          rm -rf node_modules
-          rm package-lock.json
           npm cache clean --force
           npm install
           echo "Init success.."
