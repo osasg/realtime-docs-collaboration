@@ -3,11 +3,12 @@ pipeline {
 
 	environment {
     GOOGLE_PROJECT_ID = 'dsc-fptu-hcmc-orientation'
-    // GOOGLE_SERVICE_ACCOUNT_KEY = credentials('service_account_key')
+    GOOGLE_APPLICATION_CREDENTIALS = credentials('dsc-fptu-hcmc-orientation')
   }
 
   tools {
-    nodejs 'Node-build'
+    nodejs 'NodeJSTool'
+    gcloud 'GCloudSDKTool'
   }
 
 	stages {
@@ -51,10 +52,13 @@ pipeline {
 		stage('Deploy') {
 			steps {
         sh '''
-          echo "GCP credentails: ${GOOGLE_SERVICE_ACCOUNT_KEY}"
+          echo "GCP credentails: ${GOOGLE_APPLICATION_CREDENTIALS}"
           gcloud config set project $GOOGLE_PROJECT_ID
-          gcloud auth activate-service-account --key-file $GOOGLE_SERVICE_ACCOUNT_KEY
+          gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
           gcloud config list
+          
+          cp app.yaml dist/app.yaml
+          cd dist
           gcloud app deploy --version=v01
           echo "Deployed to Google Compute Engine"
         '''
