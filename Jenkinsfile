@@ -48,8 +48,6 @@ pipeline {
         withCredentials([file(credentialsId: 'google-application-credentials-secret-file', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
           sh '''
             gcloud --version
-            gcloud --quiet components update
-
             echo "GCP credentails: $GOOGLE_APPLICATION_CREDENTIALS"
             gcloud config set project $GOOGLE_PROJECT_ID
             gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
