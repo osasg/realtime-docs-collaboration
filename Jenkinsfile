@@ -5,10 +5,6 @@ pipeline {
     GOOGLE_PROJECT_ID = 'dsc-fptu-hcmc-orientation'
   }
 
-  tools {
-    nodejs 'NodeJSTool'
-  }
-
 	stages {
 		stage('Init') {
 			steps {
@@ -51,17 +47,6 @@ pipeline {
 			steps {
         withCredentials([file(credentialsId: 'google-application-credentials-secret-file', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
           sh '''
-            export DIRECTORY="/var/jenkins_home/GoogleCloudSDK/google-cloud-sdk/bin"
-            if [ ! -d "$DIRECTORY" ]; then
-              echo "Download Google Cloud SDK tools"
-              cd /var/jenkins_home
-              wget https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.zip -O google-cloud-sdk.zip
-              unzip -o google-cloud-sdk.zip -d ./GoogleCloudSDK/
-              ./GoogleCloudSDK/google-cloud-sdk/install.sh
-            fi
-            export PATH=/var/jenkins_home/GoogleCloudSDK/google-cloud-sdk/bin:$PATH
-            export CLOUDSDK_PYTHON="/var/jenkins_home/python/python3"
-            echo "PATH: $PATH"
             gcloud --version
             gcloud --quiet components update
 
