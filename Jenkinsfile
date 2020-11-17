@@ -7,7 +7,6 @@ pipeline {
 
   tools {
     nodejs 'NodeJSTool'
-    'jenkins.plugins.shiningpanda.tools.PythonInstallation' 'PythonTool'
   }
 
 	stages {
@@ -26,7 +25,6 @@ pipeline {
           echo "PATH = ${PATH}"
           node -v
           npm -v
-          python3 -v
           npm cache clean --force
           npm install
           echo "Init success.."
@@ -62,7 +60,7 @@ pipeline {
               ./GoogleCloudSDK/google-cloud-sdk/install.sh
             fi
             export PATH=/var/jenkins_home/GoogleCloudSDK/google-cloud-sdk/bin:$PATH
-            export CLOUDSDK_PYTHON="/usr/bin/python2.6"
+            export CLOUDSDK_PYTHON="/var/jenkins_home/python/python3"
             echo "PATH: $PATH"
             gcloud --version
             gcloud --quiet components update
@@ -93,7 +91,6 @@ pipeline {
 //   emailext  (
 //     body:"""
 //       Adtech-Service - Build # $BUILD_NUMBER - $currentBuild.currentResult:
-    
 
 //       Check console output at $BUILD_URL to view the results.
 //     """,
