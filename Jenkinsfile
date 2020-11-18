@@ -6,7 +6,7 @@ pipeline {
   }
 
 	stages {
-		stage('Init') {
+		stage('Install dependencies') {
 			steps {
         script {
           if (fileExists('node_modules')) {
@@ -19,40 +19,35 @@ pipeline {
         }
         sh '''
           echo "PATH = ${PATH}"
-          node -v
-          npm -v
+          node --version
+          npm --version
           npm cache clean --force
           npm install
-          echo "Init success.."
+          echo "Install dependencies successfully!"
         '''
 			}
 		}
 
-		stage('Build') {
+		stage('Bundle Angular application') {
 			steps {
 				sh '''
           echo "BUILD NUMBER = $BUILD_NUMBER"
           ./node_modules/.bin/ng build --aot --prod
-          echo "Build Success.."
+          echo ""
         '''
 			}
-			// post {  
-      //   always {
-      //     notifyThroughEmail('Build-stage')
-      //   }
-      // }
     }
 
-		stage('Deploy') {
+		stage('Deploy to production') {
 			steps {
         withCredentials([file(credentialsId: 'google-application-credentials-secret-file', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+          input message: 'Deploy to production? (Click "Proceed" to continue)'
           sh '''
             gcloud --version
             echo "GCP credentails: $GOOGLE_APPLICATION_CREDENTIALS"
             gcloud config set project $GOOGLE_PROJECT_ID
             gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
             gcloud config list
-            
             cp app.yaml dist/app.yaml
             cd dist
             gcloud app deploy --version=v01
@@ -60,28 +55,6 @@ pipeline {
           '''
         }
       }	
-      post{
-        always{
-          println "Result : ${currentBuild.result}"
-          // notifyThroughEmail('Deploy-stage')
-				}
-			}
 		}
 	}
 }
-
-// def notifyThroughEmail(String stage= "Default stage"){
-//   emailext  (
-//     body:"""
-//       Adtech-Service - Build # $BUILD_NUMBER - $currentBuild.currentResult:
-
-//       Check console output at $BUILD_URL to view the results.
-//     """,
-//     compressLog: true,
-//     attachLog: true,
-//     replyTo: '-----@---.com, -----@----.com',
-//     recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-//     subject: "Build Notification Jenkins - Project : Project-service - Job: $JOB_NAME Build # $BUILD_NUMBER ${currentBuild.currentResult}",
-//     to: '-----@---.com, -----@----.com'
-//   )
-// }
