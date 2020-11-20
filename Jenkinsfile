@@ -5,71 +5,87 @@ pipeline {
     GOOGLE_PROJECT_ID = 'dsc-fptu-hcmc-orientation'
   }
 
-  tools {
-    nodejs 'NodeJSTool'
+  options {
+    // Keep the 10 most recent builds
+    buildDiscarder(logRotator(numToKeepStr:'10')) 
   }
 
 	stages {
-		stage('Init') {
+		stage('Install dependencies') {
 			steps {
         script {
-          if (fileExists('node_modules')) {
+          if (fileExists('dist'))
+            sh 'rm -rf dist'
+          if (fileExists('node_modules'))
             sh 'rm -rf node_modules'
-          }
-
-          if (fileExists('rm package-lock.json')) {
+          if (fileExists('rm package-lock.json'))
             sh 'rm package-lock.json'
-          }
         }
         sh '''
           echo "PATH = ${PATH}"
-          node -v
-          npm -v
+          node --version
+          npm --version
           npm cache clean --force
           npm install
-          echo "Init success.."
+          echo "Install dependencies successfully!"
         '''
 			}
 		}
 
-		stage('Build') {
+    // stage('Test Code Coverage') {
+    //   steps {
+    //     sh './node_modules/.bin/ng test --no-watch --code-coverage'
+    //     // create the `reports` directory if not exist
+    //     publishHTML(
+    //       target : [
+    //         allowMissing: false,
+    //         alwaysLinkToLastBuild: false,
+    //         keepAll: true,
+    //         reportDir: './coverage/angular-boilerplate/',
+    //         reportFiles: 'index.html',
+    //         reportName: 'RCov Report',
+    //         reportTitles: 'RCov Report'
+    //       ]
+    //     )
+    //   }
+    // }
+
+		stage('Bundle Angular application') {
 			steps {
 				sh '''
           echo "BUILD NUMBER = $BUILD_NUMBER"
           ./node_modules/.bin/ng build --aot --prod
-          echo "Build Success.."
+          echo ""
         '''
-			}
-			// post {  
-      //   always {
-      //     notifyThroughEmail('Build-stage')
-      //   }
-      // }
+      }
+      post {
+        success {
+          // Archive the built artifacts
+          archiveArtifacts(
+            artifacts: 'dist/**/*.*',
+            allowEmptyArchive: false
+          )
+
+          // emailext (
+          //   subject: "BUILD SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+          //   body: """<p>BUILD SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+          //     <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
+          //   recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+          // )
+        }
+      }
     }
 
-		stage('Deploy') {
+		stage('Deploy to production') {
 			steps {
         withCredentials([file(credentialsId: 'google-application-credentials-secret-file', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+          input message: 'Deploy to production? (Click "Proceed" to continue)'
           sh '''
-            export DIRECTORY="/var/jenkins_home/GoogleCloudSDK/google-cloud-sdk/bin"
-            if [ ! -d "$DIRECTORY" ]; then
-              echo "Download Google Cloud SDK tools"
-              cd /var/jenkins_home
-              wget https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.zip -O google-cloud-sdk.zip
-              unzip -o google-cloud-sdk.zip -d ./GoogleCloudSDK/
-              ./GoogleCloudSDK/google-cloud-sdk/install.sh
-            fi
-            export PATH=/var/jenkins_home/GoogleCloudSDK/google-cloud-sdk/bin:$PATH
-            export CLOUDSDK_PYTHON="/var/jenkins_home/python/python3"
-            echo "PATH: $PATH"
             gcloud --version
-            gcloud --quiet components update
-
             echo "GCP credentails: $GOOGLE_APPLICATION_CREDENTIALS"
             gcloud config set project $GOOGLE_PROJECT_ID
             gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
             gcloud config list
-            
             cp app.yaml dist/app.yaml
             cd dist
             gcloud app deploy --version=v01
@@ -77,28 +93,6 @@ pipeline {
           '''
         }
       }	
-      post{
-        always{
-          println "Result : ${currentBuild.result}"
-          // notifyThroughEmail('Deploy-stage')
-				}
-			}
 		}
 	}
 }
-
-// def notifyThroughEmail(String stage= "Default stage"){
-//   emailext  (
-//     body:"""
-//       Adtech-Service - Build # $BUILD_NUMBER - $currentBuild.currentResult:
-
-//       Check console output at $BUILD_URL to view the results.
-//     """,
-//     compressLog: true,
-//     attachLog: true,
-//     replyTo: '-----@---.com, -----@----.com',
-//     recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-//     subject: "Build Notification Jenkins - Project : Project-service - Job: $JOB_NAME Build # $BUILD_NUMBER ${currentBuild.currentResult}",
-//     to: '-----@---.com, -----@----.com'
-//   )
-// }
