@@ -32,6 +32,24 @@ pipeline {
 			}
 		}
 
+    stage('Test Code Coverage') {
+      steps {
+        sh './node_modules/.bin/ng test --no-watch --code-coverage'
+        // create the `reports` directory if not exist
+        publishHTML(
+          target : [
+            allowMissing: false,
+            alwaysLinkToLastBuild: false,
+            keepAll: true,
+            reportDir: './coverage/angular-boilerplate/',
+            reportFiles: 'index.html',
+            reportName: 'RCov Report',
+            reportTitles: 'RCov Report'
+          ]
+        )
+      }
+    }
+
 		stage('Bundle Angular application') {
 			steps {
 				sh '''
@@ -46,19 +64,6 @@ pipeline {
           archiveArtifacts(
             artifacts: 'dist/**/*.*',
             allowEmptyArchive: false
-          )
-          // create the `reports` directory if not exist
-          sh 'test -d "./reports" || mkdir reports'
-          publishHTML(
-            target : [
-              allowMissing: false,
-              alwaysLinkToLastBuild: false,
-              keepAll: true,
-              reportDir: './',
-              reportFiles: 'index.html',
-              reportName: 'RCov Report',
-              reportTitles: 'RCov Report'
-            ]
           )
         }
       }
