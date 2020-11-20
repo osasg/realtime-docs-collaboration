@@ -1,7 +1,6 @@
+![DSC FPTU HCMC](/src/assets/images/dsc-fptu-hcmc/DSC_FPT_University_HCMC_Horizontal_Logo.png)
+
 # Angular Boilerplate
-
-**Developer Student Clubs FPT University HCMC**
-
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.0.
 
 ## Development server
@@ -36,3 +35,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 - [ ] Always Document
 - [ ] Run lint when commiting
 - [ ] https://next.json-generator.com/
+
+![DSC FPTU HCMC](/src/assets/images/dsc-fptu-hcmc/HOME_PAGE_BANNERS.png)
