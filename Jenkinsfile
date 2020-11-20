@@ -5,17 +5,21 @@ pipeline {
     GOOGLE_PROJECT_ID = 'dsc-fptu-hcmc-orientation'
   }
 
+  options {
+    // Keep the 10 most recent builds
+    buildDiscarder(logRotator(numToKeepStr:'10')) 
+  }
+
 	stages {
 		stage('Install dependencies') {
 			steps {
         script {
-          if (fileExists('node_modules')) {
+          if (fileExists('dist'))
+            sh 'rm -rf dist'
+          if (fileExists('node_modules'))
             sh 'rm -rf node_modules'
-          }
-
-          if (fileExists('rm package-lock.json')) {
+          if (fileExists('rm package-lock.json'))
             sh 'rm package-lock.json'
-          }
         }
         sh '''
           echo "PATH = ${PATH}"
@@ -35,7 +39,29 @@ pipeline {
           ./node_modules/.bin/ng build --aot --prod
           echo ""
         '''
-			}
+      }
+      post {
+        success {
+          // Archive the built artifacts
+          archiveArtifacts(
+            artifacts: 'dist/**/*.*',
+            allowEmptyArchive: false
+          )
+          // create the `reports` directory if not exist
+          sh 'test -d "./reports" || mkdir reports'
+          publishHTML(
+            target : [
+              allowMissing: false,
+              alwaysLinkToLastBuild: false,
+              keepAll: true,
+              reportDir: './',
+              reportFiles: 'index.html',
+              reportName: 'RCov Report',
+              reportTitles: 'RCov Report'
+            ]
+          )
+        }
+      }
     }
 
 		stage('Deploy to production') {
