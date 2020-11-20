@@ -32,23 +32,23 @@ pipeline {
 			}
 		}
 
-    stage('Test Code Coverage') {
-      steps {
-        sh './node_modules/.bin/ng test --no-watch --code-coverage'
-        // create the `reports` directory if not exist
-        publishHTML(
-          target : [
-            allowMissing: false,
-            alwaysLinkToLastBuild: false,
-            keepAll: true,
-            reportDir: './coverage/angular-boilerplate/',
-            reportFiles: 'index.html',
-            reportName: 'RCov Report',
-            reportTitles: 'RCov Report'
-          ]
-        )
-      }
-    }
+    // stage('Test Code Coverage') {
+    //   steps {
+    //     sh './node_modules/.bin/ng test --no-watch --code-coverage'
+    //     // create the `reports` directory if not exist
+    //     publishHTML(
+    //       target : [
+    //         allowMissing: false,
+    //         alwaysLinkToLastBuild: false,
+    //         keepAll: true,
+    //         reportDir: './coverage/angular-boilerplate/',
+    //         reportFiles: 'index.html',
+    //         reportName: 'RCov Report',
+    //         reportTitles: 'RCov Report'
+    //       ]
+    //     )
+    //   }
+    // }
 
 		stage('Bundle Angular application') {
 			steps {
@@ -65,6 +65,13 @@ pipeline {
             artifacts: 'dist/**/*.*',
             allowEmptyArchive: false
           )
+
+          // emailext (
+          //   subject: "BUILD SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+          //   body: """<p>BUILD SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+          //     <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>""",
+          //   recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+          // )
         }
       }
     }
