@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "dscfptuhcmc-docs-collaboration"
+  },
+  "targets": {
+    "dscfptuhcmc-docs-collaboration": {
+      "hosting": {
+        "angular-boilerplate": [
+          "dscfptuhcmc-docs-collaboration"
+        ]
+      }
+    }
+  }
+}

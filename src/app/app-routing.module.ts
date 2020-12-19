@@ -12,8 +12,8 @@ const routes: Routes = [
     loadChildren: () => import('./containers/AuthPage/auth-page.module').then(m => m.AuthPageModule)
   },
   {
-    path: 'blogfeeds',
-    loadChildren: () => import('./containers/BlogFeedListPage/blog-feed-list-page.module').then(m => m.BlogFeedListPageModule)
+    path: 'dashboard',
+    loadChildren: () => import('./containers/DashboardPage/dashboard-page.module').then(m => m.DashboardPageModule)
   }
 ];
 

@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-import { AuthService } from '../services/auth.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { trace } from '@angular/fire/performance';
 
 @Injectable()
 export class NoAuthGuard implements CanActivate, CanActivateChild {
   constructor(
-    private _authService: AuthService,
+    private _auth: AngularFireAuth,
     private _router: Router
   ) { }
 
@@ -17,16 +17,17 @@ export class NoAuthGuard implements CanActivate, CanActivateChild {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    return this._authService
-      .isAuthenticated()
+    return this._auth.authState
       .pipe(
+        trace('auth'),
+        map(u => !!u),
         map(isAuthenticated => {
           console.log(isAuthenticated);
           if (!isAuthenticated)
             return true;
           this._router.navigate(['/']);
         })
-      )
+      );
   }
 
   canActivateChild(

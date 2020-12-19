@@ -1,7 +1,7 @@
 <div class="auth-page">
-  <app-header subtitle="DSC FPTU HCMC - Angular Boilerplate" title="LOGIN"></app-header>
-  <form #formSignIn class="form-signin" (submit)="onSubmit($event)">
-    <div class="form-title">Login</div>
+  <app-header subtitle="DSC FPTU HCMC - Angular Boilerplate" title="Sign In"></app-header>
+  <div #formSignIn class="form-signin" (submit)="onSubmit($event)">
+    <div class="form-title">Sign In</div>
     <div class="form-fields">
       <mat-form-field appearance="fill">
         <mat-label>USERNAME/EMAIL</mat-label>
@@ -29,9 +29,12 @@
       <button mat-raised-button color="primary">LOGIN</button>
       <button class="btn-cancel" mat-flat-button>CANCEL</button>
     </div>
+    <div class="form-actions">
+      <button (click)="signInWithGoogle()" mat-raised-button color="primary">LOGIN WITH GOOGLE</button>
+    </div>
     <mat-divider></mat-divider>
     <div class="form-dont-have-an-account">
       <span>Don’t have an account? <a [routerLink]="'/signup'">Signup</a></span>
     </div>
-  </form>
+  </div>
 </div>

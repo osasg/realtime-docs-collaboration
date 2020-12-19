@@ -12,15 +12,11 @@ import { LayoutComponent } from './components/Layout/layout.component';
 import { NavbarComponent } from './components/Navbar/navbar.component';
 import { SidebarComponent } from './components/Sidebar/sidebar.component';
 import { FooterComponent } from './components/Footer/footer.component';
-
-import { AuthGuard } from './guards/auth.guard';
-import { NoAuthGuard } from './guards/no-auth.guard';
-
-import { AuthService } from './services/auth.service';
-import { DataService } from './services/data.service';
-import { AuthInterceptor } from './interceptors/access-token.interceptor';
-import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { HeaderComponent } from './components/Header/header.component';
+
+import { DataService } from './services/data.service';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { NoAuthGuard } from './guards/no-auth.guard';
 
 @NgModule({
   imports: [
@@ -50,15 +46,8 @@ import { HeaderComponent } from './components/Header/header.component';
     HeaderComponent
   ],
   providers: [
-    AuthService,
     DataService,
-    AuthGuard,
     NoAuthGuard,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,

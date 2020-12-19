@@ -4,7 +4,17 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:8080'
+  baseUrl: 'http://localhost:8080',
+  firebase: {
+    apiKey: 'your_key',
+    authDomain: 'your_project_authdomain',
+    databaseURL: 'your_database_URL',
+    projectId: 'your_project_id',
+    storageBucket: 'your_storage_bucket',
+    messagingSenderId: 'your_messaging_sender_id',
+    appId: 'your_app_id',
+    measurementId: 'your_measurement_id'
+  }
 };
 
 /*
