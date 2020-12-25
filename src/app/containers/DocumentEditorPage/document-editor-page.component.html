@@ -1,0 +1,93 @@
+ <div class="document-editor-page">
+   <div class="container">
+    <div [class]="{ lecture: true, 'slide-sorter': editor.slideSorter }">
+      <div class="slide slide-active">
+        <div class="title"><h1>AAAA</h1></div>
+        <p>
+          Hybrid Mobile Applications. Hybrid development combines the best (or worst) of both the native and HTML5
+          worlds. We
+          define hybrid as a web app, primarily built using HTML5 and JavaScript, that is then wrapped inside a thin
+          native
+          container that provides access to native platform features.
+        </p>
+      </div>
+      <div class="slide">
+        <div class="title"><h1>AAAA</h1></div>
+        <p>
+          Hybrid Mobile Applications. Hybrid development combines the best (or worst) of both the native and HTML5
+          worlds. We
+          define hybrid as a web app, primarily built using HTML5 and JavaScript, that is then wrapped inside a thin
+          native
+          container that provides access to native platform features.
+        </p>
+        <p>
+          Hybrid Mobile Applications. Hybrid development combines the best (or worst) of both the native and HTML5
+          worlds. We
+          define hybrid as a web app, primarily built using HTML5 and JavaScript, that is then wrapped inside a thin
+          native
+          container that provides access to native platform features.
+        </p>
+      </div>
+      <div class="slide">
+        <div class="title"><h1>AAAA</h1></div>
+        <p>
+          Hybrid Mobile Applications. Hybrid development combines the best (or worst) of both the native and HTML5
+          worlds. We
+          define hybrid as a web app, primarily built using HTML5 and JavaScript, that is then wrapped inside a thin
+          native
+          container that provides access to native platform features.
+        </p>
+        <p>
+          Hybrid Mobile Applications. Hybrid development combines the best (or worst) of both the native and HTML5
+          worlds. We
+          define hybrid as a web app, primarily built using HTML5 and JavaScript, that is then wrapped inside a thin
+          native
+          container that provides access to native platform features.
+        </p>
+        <p>
+          Hybrid Mobile Applications. Hybrid development combines the best (or worst) of both the native and HTML5
+          worlds. We
+          define hybrid as a web app, primarily built using HTML5 and JavaScript, that is then wrapped inside a thin
+          native
+          container that provides access to native platform features.
+        </p>
+      </div>
+      <div class="slide">
+        <div class="title"><h1>AAAA</h1></div>
+        <p>
+          Hybrid Mobile Applications. Hybrid development combines the best (or worst) of both the native and HTML5
+          worlds. We
+          define hybrid as a web app, primarily built using HTML5 and JavaScript, that is then wrapped inside a thin
+          native
+          container that provides access to native platform features.
+        </p>
+      </div>
+    </div>
+    <div class="drawing-tools">
+      <i class="fas fa-pen-nib black tool-active" data-color="black"></i>
+      <i class="fas fa-pen-nib red" data-color="red"></i>
+      <i class="fas fa-pen-nib green" data-color="green"></i>
+      <i class="fas fa-pen-nib blue" data-color="blue"></i>
+      <i class="fas fa-pen-nib yellow" data-color="yellow"></i>
+      <i class="fas fa-highlighter" data-color="rgb(0, 255, 21, .1)"></i>
+      <i class="fas fa-eraser" data-color="#EEE"></i>
+      <i class="far fa-file clear"></i>
+      <input type="range" class="color-range" min=10 max=200 value=20>
+    </div>
+    <div class="on-drawing">
+      <canvas class="canvas"></canvas>
+    </div>
+    <div class="drawing">
+      <canvas class="canvas"></canvas>
+    </div>
+    <span class="arrow arrow-active left" data-left="left"><i class="fas fa-angle-left"></i></span>
+    <span class="arrow arrow-active right" data-right="right"><i class="fas fa-angle-right"></i></span>
+    <div class="manager">
+      <button mat-raised-button class="enable-view-slide" (click)="toggleSlideSorter()">enable-view-slide</button>
+      <button mat-raised-button class="open-drawing-tools">open-drawing-tools</button>
+      <button mat-raised-button class="open-drawing">open-drawing</button>
+      <button mat-raised-button class="disabled-slide">disabled-slide</button>
+    </div>
+    <div class="pen"></div>
+  </div>
+</div>

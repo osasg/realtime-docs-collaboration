@@ -1,12 +1,17 @@
 {
   "projects": {
-    "default": "dscfptuhcmc-docs-collaboration"
+    "default": "dscfptuhcmc-docs-collaboration",
+    "dev": "",
+    "prod": ""
   },
   "targets": {
-    "dscfptuhcmc-docs-collaboration": {
+    "dscfptuhcmc-docs-collaboration": { // project ID
       "hosting": {
-        "angular-boilerplate": [
-          "dscfptuhcmc-docs-collaboration"
+        "prod": [ // user-defined identifier for the Hosting site, call it whatever you'd like
+          "dscfptuhcmc-docs-collaboration" // name of the Hosting site as listed in your Firebase project
+        ],
+        "dev": [
+          "docs-collaboration-dev"
         ]
       }
     }

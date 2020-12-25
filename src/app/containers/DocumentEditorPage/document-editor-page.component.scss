@@ -1,0 +1,376 @@
+.document-editor-page {
+  * {
+    box-sizing: border-box;
+  }
+
+  .container {
+    margin-left: -60px;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    font-size: 30px;
+    overflow: hidden;
+  }
+
+  .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: translateX(-100%);
+    padding: 3rem 8rem;
+    box-sizing: border-box;
+    transition: .5s ease;
+    overflow: hidden;
+    font-size: 1em;
+    user-select: none;
+  }
+
+  .arrow {
+    width: 80px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    font-size: 8rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* display: none; */
+    opacity: 0;
+    color: #000;
+    background-color: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: .5s ease;
+    visibility: hidden;
+  }
+
+  .left {
+    left: 0;
+  }
+
+  .arrow-active {
+    visibility: visible;
+  }
+
+  .arrow-active:hover {
+    opacity: .5;
+    width: 120px;
+  }
+
+  .slide-active {
+    transform: translateX(0);
+  }
+
+  .title h1 {
+    font-size: 2em;
+    margin-top: 12px;
+    background-image: linear-gradient(to left, #000 0%, #000 100%);
+    background-position: 0 1.2em;
+    background-size: 0 100%;
+    background-repeat: no-repeat;
+    transition: background 1.9s ease,
+    background-position .8s ease,
+    font-size .6s;
+  }
+
+  .slide-active .title h1 {
+    background-size: 100% 100%;
+  }
+
+  .manager {
+    position: fixed;
+    bottom: 24px;
+    right: 180px;
+    opacity: 0;
+    transition: .3s;
+    display: flex;
+  }
+
+  .manager:hover {
+    opacity: 1;
+  }
+
+  .manager i {
+    font-size: 2rem;
+    cursor: pointer;
+    background-color: rgb(139, 138, 138);
+    color: #FFF;
+    padding: 12px 18px;
+    margin: 0;
+    transition: .3s ease;
+  }
+
+  .manager i:hover {
+    transform: scale(1.2);
+    background-color: rgb(61, 61, 61);
+  }
+
+
+  .slide-sorter {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    justify-items: center;
+    padding: 36px;
+    grid-gap: 40px;
+    font-size: 10px;
+  }
+
+  .slide-sorter .slide {
+    position: static;
+    transform: translateX(0);
+    width: 340px;
+    height: 200px;
+    padding: 2em 3em;
+    border: .5px solid rgb(204, 206, 204);
+    border-radius: 4px;
+    box-shadow: 2px 2px 18px rgba(0, 0, 0, .1);
+  }
+
+  .slide-sorter .slide-active {
+    border: 2px solid rgb(224, 226, 224);
+    box-shadow: 2px 2px 18px 1px rgb(177, 174, 174, .1);
+    transform: scale(1.1);
+  font-size: 12px;
+  }
+
+  .drawing {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateY(-100%);
+    background-color: #EEE;
+    transition: .5s ease;
+    width: 100%;
+    height: 100%;
+  }
+
+  .drawing-active {
+    transform: translateY(0);
+  }
+
+  .drawing-tools {
+    position: absolute;
+    top: 24px;
+    left: 36px;
+    display: none;
+    z-index: 1;
+  }
+
+  .open-tools {
+    display: flex;
+  }
+
+  .drawing-tools i {
+    background-color: #FFF;
+    padding: 16px;
+    cursor: pointer;
+    border: 2px solid #FFF;
+  }
+
+  .drawing-tools i:hover {
+    background-color: rgb(247, 245, 245);
+    border-color: #AAA;
+  }
+
+  .drawing-tools .black {
+    color: black;
+  }
+
+  .drawing-tools .red {
+    color: red;
+  }
+
+  .drawing-tools .green {
+    color: green;
+  }
+
+  .drawing-tools .blue {
+    color: blue;
+  }
+
+  .drawing-tools .yellow {
+    color: yellow;
+  }
+
+  .drawing-tools .fa-highlighter {
+    color: rgb(0, 255, 21);
+    border: .2px solid rgb(0, 255, 21);
+    margin-left: 50px;
+  }
+
+  .fa-eraser {
+    margin-left: 50px;
+  }
+
+  .drawing-tools .tool-active {
+    transform: scale(1.2);
+    border: 1px solid rgb(255, 160, 160);
+    background-color: rgb(255, 240, 240);
+  }
+
+  .color-range {
+    margin: 16px 28px;
+    -webkit-appearance: none; /* Override default CSS styles */
+    appearance: none;
+    width: 400px; /* Full-width */
+    height: 25px; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+    border-radius: 12px;
+  }
+
+  /* Mouse-over effects */
+  .color-range:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+  }
+
+  /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+  .color-range::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 30px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    border-radius: 12px;
+    cursor: pointer; /* Cursor on hover */
+  }
+
+  .color-range::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #4CAF50; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }
+
+  .on-drawing {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+  }
+
+  .on-drawing-active {
+    visibility: visible;
+  }
+
+  .pen {
+    position: fixed;
+    top: 50px;
+    left: 50px;
+    /* width: 16px; */
+    /* height: 16px; */
+    padding: 8px;
+    border: 4px solid #000;
+    border-radius: 50%;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  /*
+  ========================================================================================
+  ========================================================================================
+  OVERLAY START
+  ========================================================================================
+  ========================================================================================
+  */
+  .overlay-start {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #12b303;
+    font-size: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* display: none; */
+    z-index: 1;
+  }
+
+  .overlay-start .title h1 {
+    font-size: 6em;
+    color: rgb(237, 255, 235);
+    user-select: none;
+    text-shadow: 3px 3px 18px rgba(0, 0, 0, .6),
+    6px 6px 1px rgba(2, 68, 0, 0.35);
+    display: flex;
+    overflow: hidden;
+    padding: 0;
+    margin-top: 8rem;
+  }
+
+  .start {
+    margin-top: 80px;
+    overflow: hidden;
+  }
+
+  .start-btn {
+    border: none;
+    border-left: 12px solid #FFF;
+    border-right: 12px solid #FFF;
+    color: #FFF;
+    padding: 18px 42px;
+    font-size: 1.8em;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: transparent;
+    outline: none;
+    position: relative;
+    transition: .5s ease;
+  }
+
+  .start-btn span {
+    padding: 12px;
+    padding-bottom: 4px;
+    background-image: linear-gradient(to left, rgb(16, 134, 5) 0%, rgb(16, 134, 5) 100%);
+    background-position: 0 52px;
+    background-size: 0 100%;
+    background-repeat: no-repeat;
+    transition: background .8s ease;
+  }
+
+  .start-btn:after, .start-btn:before {
+    position: absolute;
+    top: 0;
+    right: -50%;
+    content: '';
+    background-color: #FFF;
+    width: 50%;
+    height: 100%;
+    transition: .5s ease;
+    z-index: -1;
+  }
+
+  .start-btn:before {
+    left: -50%;
+  }
+
+  .start-btn:hover:after {
+    display: block;
+    right: 0px;
+  }
+
+  .start-btn:hover:before {
+    display: block;
+    left: 0px;
+  }
+
+  .start-btn:hover {
+    color: rgb(16, 134, 5);
+  }
+
+  .start-btn:hover span {
+    background-size: 100% 100%;
+  }
+}

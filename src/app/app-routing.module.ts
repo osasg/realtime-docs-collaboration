@@ -14,6 +14,10 @@ const routes: Routes = [
   {
     path: 'dashboard',
     loadChildren: () => import('./containers/DashboardPage/dashboard-page.module').then(m => m.DashboardPageModule)
+  },
+  {
+    path: 'documents',
+    loadChildren: () => import('./containers/DocumentEditorPage/document-editor-page.module').then(m => m.DocumentEditorPageModule)
   }
 ];
 

@@ -41,6 +41,7 @@ yarn-error.log
 testem.log
 /typings
 package-lock.json
+*.log
 
 # System Files
 .DS_Store
@@ -48,3 +49,6 @@ Thumbs.db
 
 # credentials
 google-application-credentials.json
+
+# others
+/.firebase

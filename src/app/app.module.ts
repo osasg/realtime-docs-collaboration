@@ -9,6 +9,7 @@ import { SharedModule } from './shared/';
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialRootModule } from './material.module';
 import { DashboardPageModule } from './containers/DashboardPage/dashboard-page.module';
+import { DocumentEditorPageModule } from './containers/DocumentEditorPage/document-editor-page.module';
 import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
@@ -33,7 +34,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SharedModule,
     MaterialRootModule,
     BrowserAnimationsModule,
-    DashboardPageModule
+    DashboardPageModule,
+    DocumentEditorPageModule
   ],
   providers: [
   ],

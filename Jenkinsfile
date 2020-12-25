@@ -7,7 +7,7 @@ pipeline {
 
   options {
     // Keep the 10 most recent builds
-    buildDiscarder(logRotator(numToKeepStr:'10')) 
+    buildDiscarder(logRotator(numToKeepStr:'10'))
   }
 
 	stages {
@@ -41,7 +41,7 @@ pipeline {
     //         allowMissing: false,
     //         alwaysLinkToLastBuild: false,
     //         keepAll: true,
-    //         reportDir: './coverage/angular-boilerplate/',
+    //         reportDir: './coverage/realtime-docs-collaboration/',
     //         reportFiles: 'index.html',
     //         reportName: 'RCov Report',
     //         reportTitles: 'RCov Report'
@@ -92,7 +92,7 @@ pipeline {
             echo "Deployed to Google Compute Engine"
           '''
         }
-      }	
+      }
 		}
 	}
 }

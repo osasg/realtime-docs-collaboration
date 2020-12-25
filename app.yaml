@@ -8,7 +8,7 @@ api_version: 1
 threadsafe: true
 handlers:
 - url: /
-  static_files: angular-boilerplate/index.html
-  upload: angular-boilerplate/index.html
+  static_files: realtime-docs-collaboration/index.html
+  upload: realtime-docs-collaboration/index.html
 - url: /
-  static_dir: angular-boilerplate
+  static_dir: realtime-docs-collaboration
